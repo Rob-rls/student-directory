@@ -5,7 +5,7 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, nationality: "", age: ""}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -18,13 +18,11 @@ def print_header
 end
 
 def print(students)
-  counter = students.size
-  print_list = []
-  while counter > 0
-    print_list << "#{counter}. #{students[counter-1][:name]} (#{students[counter-1][:cohort]} cohort)"
-    counter -= 1
+  counter = 0
+  while counter < students.size
+    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort) nationality: #{students[counter][:nationality]}"
+    counter += 1
   end
-  puts print_list.reverse
 end
 
 def print_footer(names)
