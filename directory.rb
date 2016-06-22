@@ -18,18 +18,20 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student, i|
-    if student[:name].length <= 12
-      puts "#{i+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-    end
+  counter = students.size
+  print_list = []
+  while counter > 0
+    print_list << "#{counter}. #{students[counter-1][:name]} (#{students[counter-1][:cohort]} cohort)"
+    counter -= 1
   end
+  puts print_list.reverse
 end
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
 
-students = input_students
+student_list = input_students
 print_header
-print(students)
-print_footer(students)
+print(student_list)
+print_footer(student_list)
