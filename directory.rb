@@ -12,16 +12,15 @@ def input_students
   students
 end
 
-def print_header
+def print_header(linewidth)
   puts "The students of Villains Academy"
-  puts "-------------------"
+  puts "#".ljust(4) + "Name".ljust(linewidth) + "Cohort".ljust(linewidth/2)
+  puts "-"*4 + "-"*(linewidth) + "-"*(linewidth/2)
 end
 
-def print(students)
-  counter = 0
-  while counter < students.size
-    puts "#{counter + 1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort) nationality: #{students[counter][:nationality]}"
-    counter += 1
+def print(students, linewidth)
+  students.each_with_index do |student, i|
+      puts "#{i+1}.".ljust(4) + "#{student[:name]}".ljust(linewidth) + "(#{student[:cohort]} cohort)".ljust(linewidth/2)
   end
 end
 
@@ -29,7 +28,8 @@ def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
 
+linewidth = 36
 student_list = input_students
-print_header
-print(student_list)
+print_header(linewidth)
+print(student_list, linewidth)
 print_footer(student_list)
