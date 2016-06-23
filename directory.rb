@@ -7,12 +7,14 @@ def input_students
   name = gets.chomp
   while !name.empty? do
     puts "Enter the cohort month"
-    cohort = gets.chomp.downcase.to_sym
-    while !cohort_month.include?(cohort)
+    cohort = gets.chomp.downcase
+    cohort = "november" if cohort == ""
+    while !cohort_month.include?(cohort.to_sym)
       puts "Enter a valid cohort"
-      cohort = gets.chomp.downcase.to_sym
+      cohort = gets.chomp.downcase
+      cohort = "november" if cohort == ""
     end
-    students << {name: name, cohort: cohort, nationality: "", age: ""}
+    students << {name: name, cohort: cohort.to_sym, nationality: "", age: ""}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
