@@ -1,4 +1,14 @@
 #let's put all students into an array
+def pluraler(n, singular, plural=nil)
+  if n == 1
+    "#{singular}"
+  elsif plural
+    "#{plural}"
+  else
+    "#{singular}s"
+  end
+end
+    
 def input_students
   cohort_month = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
   puts "Please enter the names of the students"
@@ -38,7 +48,7 @@ def print(students, linewidth)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great #{pluraler(names.count, "student")}"
 end
 
 linewidth = 36
