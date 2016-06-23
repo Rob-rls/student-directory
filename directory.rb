@@ -14,7 +14,7 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, hit enter twice"
   students = []
-  name = gets.chomp
+  name = gets.chop
   while !name.empty? do
     puts "Enter the cohort month"
     cohort = gets.chomp.downcase
@@ -54,5 +54,11 @@ end
 linewidth = 36
 student_list = input_students
 print_header(linewidth)
-print(student_list, linewidth)
-print_footer(student_list)
+if student_list.size > 0
+  print(student_list, linewidth) if student_list.size > 0
+  print_footer(student_list)
+else
+  puts "No Students entered"
+end
+
+  
