@@ -28,7 +28,11 @@ def print_header(linewidth)
 end
 
 def print(students, linewidth)
-  students.each_with_index do |student, i|
+  cohort_group = []
+  cohort_group = students.map.sort do |student1, student2|
+    student1[:cohort] <=> student2[:cohort] 
+  end
+  cohort_group.each_with_index do |student, i|
       puts "#{i+1}.".ljust(4) + "#{student[:name]}".ljust(linewidth) + "(#{student[:cohort]} cohort)".ljust(linewidth/2)
   end
 end
