@@ -26,17 +26,19 @@ def process(selection)
 end
 
 def load_students (filename = "students.csv")
+  @student_list.clear
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     add_to_list(name, cohort)
   end
   file.close
+  puts "#{filename} loaded..."
 end
 
 def try_load_students
   filename = ARGV.first
-  return if filename.nil?
+  filename = "students.csv" if filename.nil?
   if File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@student_list.count} from #{filename}"
