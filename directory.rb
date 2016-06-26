@@ -19,10 +19,20 @@ def process(selection)
     save_students
   when "4"
     file_exist(load_input)
+  when "5"
+    check_my_code
   when "9"
     exit
   else
     puts "Pleae select a valid option"
+  end
+end
+
+def check_my_code
+  File.open($0, "r") do |file|
+    file.readlines.each do |line|
+      puts line
+    end
   end
 end
 
@@ -78,6 +88,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
+  puts "5. Check my code"
   puts "9. Exit"
 end
 
