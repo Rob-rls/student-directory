@@ -1,3 +1,4 @@
+require 'csv'
 @student_list = []
 @filename = ""
 
@@ -32,11 +33,13 @@ end
 
 def load_students (filename)
   @student_list.clear
-  file = File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
+#  file = File.open(filename, "r") do |file|
+    #file.readlines.each do |line|
+  CSV.foreach(filename) do |line|
+      name = line[0]
+      cohort = line[1]
       add_to_list(name, cohort)
-    end
+    #end
   end
   puts "#{filename} loaded..."
   @filename = filename
