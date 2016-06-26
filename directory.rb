@@ -1,4 +1,5 @@
 @student_list = []
+@filename = ""
 
 def interactive_menu
   loop do
@@ -31,13 +32,14 @@ end
 
 def load_students (filename)
   @student_list.clear
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_to_list(name, cohort)
+  file = File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      add_to_list(name, cohort)
+    end
   end
-  file.close
   puts "#{filename} loaded..."
+  @filename = filename
 end
 
 def try_load_students
@@ -57,14 +59,18 @@ def file_exist (filename)
 end
 
 def save_students
-  file = File.open("students.csv", "w")
-  @student_list.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  puts "Enter name of file to save, or hit enter to save to loaded file #{@filename}"
+  filename = STDIN.gets.chomp
+  filename = @filename if filename == ""
+  file = File.open(filename, "w") do |file|
+    @student_list.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
-  puts "...file saved"
+  @filename = filename
+  puts "...file saved to #{@filename}"
 end
 
 def print_menu
