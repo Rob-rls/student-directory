@@ -29,11 +29,8 @@ def process(selection)
 end
 
 def check_my_code
-  File.open($0, "r") do |file|
-    file.readlines.each do |line|
-      puts line
-    end
-  end
+  contents = File.open($0, "r") {|file| file.read}
+  puts contents
 end
 
 def load_input
@@ -72,13 +69,19 @@ def save_students
   puts "Enter name of file to save, or hit enter to save to loaded file #{@filename}"
   filename = STDIN.gets.chomp
   filename = @filename if filename == ""
-  file = File.open(filename, "w") do |file|
+  CSV.open(filename, "w") do |file|
     @student_list.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << student.values
     end
   end
+
+#  file = File.open(filename, "w") do |file|
+#    @student_list.each do |student|
+#      student_data = [student[:name], student[:cohort]]
+#      csv_line = student_data.join(",")
+#      file.puts csv_line
+#    end
+#  end
   @filename = filename
   puts "...file saved to #{@filename}"
 end
@@ -121,7 +124,6 @@ def input_students
   cohort_month = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   puts "Please enter the names of the students"
   puts "To finish, hit enter twice"
-  #students = []
   name = STDIN.gets.chomp
   while !name.empty? do
     puts "Enter the cohort month"
@@ -133,7 +135,6 @@ def input_students
       cohort = "november" if cohort == ""
     end
     add_to_list(name, cohort)
-    #@student_list << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{@student_list.count} #{pluraler(@student_list.count, "student")}\nEnter a new student or hit enter to return to menu."
     name = STDIN.gets.chomp
   end
