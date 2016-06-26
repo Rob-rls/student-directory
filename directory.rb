@@ -1,7 +1,6 @@
 @student_list = []
 
 def interactive_menu
-#  student_list = []
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -17,7 +16,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    file_exist(load_input)
   when "9"
     exit
   else
@@ -25,7 +24,12 @@ def process(selection)
   end
 end
 
-def load_students (filename = "students.csv")
+def load_input
+  puts "Enter the filename you want to load.\nHit enter to use the default file 'students.csv'"
+  filename = STDIN.gets.chomp
+end
+
+def load_students (filename)
   @student_list.clear
   file = File.open(filename, "r")
   file.readlines.each do |line|
@@ -38,7 +42,11 @@ end
 
 def try_load_students
   filename = ARGV.first
-  filename = "students.csv" if filename.nil?
+  file_exist(filename)
+end
+
+def file_exist (filename)
+  filename = "students.csv" if filename.nil? || filename == ""
   if File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@student_list.count} from #{filename}"
@@ -109,10 +117,9 @@ def input_students
     end
     add_to_list(name, cohort)
     #@student_list << {name: name, cohort: cohort.to_sym}
-    puts "Now we have #{@student_list.count} #{pluraler(@student_list.count, "student")}"
+    puts "Now we have #{@student_list.count} #{pluraler(@student_list.count, "student")}\nEnter a new student or hit enter to return to menu."
     name = STDIN.gets.chomp
   end
-#  students
 end
 
 def print_header(linewidth)
