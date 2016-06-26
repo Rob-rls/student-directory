@@ -29,7 +29,7 @@ def load_students (filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @student_list << {name: name, cohort: cohort.to_sym}
+    add_to_list(name, cohort)
   end
   file.close
 end
@@ -86,6 +86,10 @@ def pluraler(n, singular, plural=nil) #make a sting plural if required
   end
 end
 
+def add_to_list (name, cohort)
+  @student_list << {name: name, cohort: cohort.to_sym}
+end
+
 def input_students
   cohort_month = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   puts "Please enter the names of the students"
@@ -101,7 +105,8 @@ def input_students
       cohort = STDIN.gets.chomp.downcase.capitalize
       cohort = "november" if cohort == ""
     end
-    @student_list << {name: name, cohort: cohort.to_sym, nationality: "", age: ""}
+    add_to_list(name, cohort)
+    #@student_list << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{@student_list.count} #{pluraler(@student_list.count, "student")}"
     name = STDIN.gets.chomp
   end
